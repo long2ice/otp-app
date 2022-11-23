@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "otp-app",
-    "slug": "otp-app",
+    "name": "TinyOTP",
+    "slug": "otp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,10 +24,27 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.long2ice.otp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.7.21"
+          },
+          "ios": {}
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4d68e89e-05b7-42b6-bcca-c730dcc40a80"
+      }
     }
   }
 }
