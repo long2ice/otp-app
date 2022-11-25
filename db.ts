@@ -19,11 +19,11 @@ export function addOTP(totp: TOTP) {
   });
 }
 
-export function getOTPList(value: string) {
+export function getOTPList(value?: string) {
   return new Promise<DBOTP[]>((resolve, reject) => {
     db.transaction((tx) => {
       let sql;
-      if (value !== "") {
+      if (value !== "" && value !== undefined) {
         sql = `select * from otp where uri like '%${value}%'`;
       } else {
         sql = "select * from otp";

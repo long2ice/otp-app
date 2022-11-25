@@ -50,7 +50,7 @@ function getHeaderTitle(route: Partial<Route<string>>) {
     case "Home":
       return i18n.t("home");
     case "Backup":
-      return i18n.t("backup");
+      return i18n.t("backup_restore");
     case "Cloud":
       return i18n.t("cloud");
   }

@@ -8,9 +8,10 @@ import { getOTPList } from "../db";
 import { DBOTP } from "../types/otp";
 import { useRoute } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/core/src/types";
-import { FlatList, RefreshControl } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import i18n from "../i18n";
-
+import { globalStyles } from "../styles";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 export default function Home() {
   const route = useRoute<RouteProp<RootStackParamList>>();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -42,19 +43,15 @@ export default function Home() {
         style={{
           width: "100%",
           borderRadius: 4,
-          backgroundColor: "white",
           height: 50,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 1,
-          },
-          shadowOpacity: 0.18,
-          shadowRadius: 1,
-          elevation: 2,
+          ...globalStyles.shadow,
         }}
         onChangeText={(text) => setValue(text)}
+        onClearPress={() => setValue("")}
         placeholder={i18n.t("search")}
+        clearIconComponent={
+          value == "" ? <View /> : <MaterialIcons name="clear" size={24} />
+        }
       />
       <FlatList
         className="mt-4 flex flex-col"

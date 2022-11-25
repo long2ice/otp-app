@@ -1,9 +1,14 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import SvgView from "react-native-svg-view";
 import { OTPProps } from "../types/props";
 import { useEffect, useState } from "react";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { DefaultTheme } from "@react-navigation/native";
+import constants from "../constants";
+import { globalStyles } from "../styles";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
+import i18n from "../i18n";
 
 export default function OTP(props: OTPProps) {
   const otp = props.otp.otp;
@@ -17,43 +22,43 @@ export default function OTP(props: OTPProps) {
       setFill(Math.floor((seconds / otp.period) * 100));
     });
   }, []);
+  const onPress = async () => {
+    await Clipboard.setStringAsync(otp.generate());
+    Toast.show({
+      type: "success",
+      text1: i18n.t("copied"),
+    });
+  };
   return (
-    <View
-      className="mb-4 flex flex-row items-center rounded bg-white p-3"
-      style={{
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.18,
-        shadowRadius: 1,
-        elevation: 2,
-      }}
-    >
-      <SvgView
-        source="https://otp.long2ice.io/icon/github.svg"
-        style={{ height: 50, width: 50 }}
-      />
-      <View className="ml-2">
-        <Text className="text-xl">{otp.issuer}</Text>
-        <Text className="text-neutral-400">{otp.label}</Text>
-      </View>
-      <Text className="font-asap ml-auto mr-2 text-3xl">{otp.generate()}</Text>
-      <AnimatedCircularProgress
-        lineCap="round"
-        duration={1000}
-        tintColor="red"
-        tintColorSecondary={DefaultTheme.colors.primary}
-        backgroundColor={DefaultTheme.colors.background}
-        style={{ transform: [{ scaleX: -1 }] }}
-        fill={fill}
-        rotation={0}
-        size={40}
-        width={4}
+    <Pressable onPress={onPress}>
+      <View
+        className="mb-4 flex flex-row items-center rounded bg-white p-3"
+        style={globalStyles.shadow}
       >
-        {() => <Text style={{ transform: [{ scaleX: -1 }] }}>{seconds}</Text>}
-      </AnimatedCircularProgress>
-    </View>
+        <SvgView
+          source={`${constants.API_URL}/icon/${otp.issuer}.svg`}
+          style={{ height: 50, width: 50 }}
+        />
+        <View className="ml-2">
+          <Text className="text-xl">{otp.issuer}</Text>
+          <Text className="text-neutral-400">{otp.label}</Text>
+        </View>
+        <Text className="ml-auto mr-2 text-3xl">{otp.generate()}</Text>
+        <AnimatedCircularProgress
+          lineCap="round"
+          duration={1000}
+          tintColor="red"
+          tintColorSecondary={DefaultTheme.colors.primary}
+          backgroundColor={DefaultTheme.colors.background}
+          style={{ transform: [{ scaleX: -1 }] }}
+          fill={fill}
+          rotation={0}
+          size={40}
+          width={4}
+        >
+          {() => <Text style={{ transform: [{ scaleX: -1 }] }}>{seconds}</Text>}
+        </AnimatedCircularProgress>
+      </View>
+    </Pressable>
   );
 }

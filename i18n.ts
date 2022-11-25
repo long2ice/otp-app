@@ -4,7 +4,7 @@ import { I18n } from "i18n-js";
 const i18n = new I18n({
   en: {
     home: "Home",
-    backup: "Backup & Restore",
+    backup_restore: "Backup & Restore",
     cloud: "Cloud",
     scan: "Scan QR Code",
     manual: "Manual Add",
@@ -21,10 +21,18 @@ const i18n = new I18n({
     requesting_camera_permission: "Requesting camera permission",
     invalid_qr_code: "Invalid QR code",
     search: "Search here...",
+    copied: "Copied",
+    backup_to_file: "Backup to file",
+    restore_from_file: "Restore from file",
+    no_storage_permission: "No storage permission",
+    backup_success: "Backup success",
+    backup_failed: "Backup failed to this folder",
+    restore_success: "Restore success",
+    restore_failed: "Restore failed",
   },
   zh: {
     home: "首页",
-    backup: "备份 & 恢复",
+    backup_restore: "备份 & 恢复",
     cloud: "云同步",
     scan: "扫码添加",
     manual: "手动添加",
@@ -41,6 +49,14 @@ const i18n = new I18n({
     requesting_camera_permission: "请求相机权限",
     invalid_qr_code: "无效的二维码",
     search: "搜索...",
+    copied: "已复制",
+    backup_to_file: "备份到文件",
+    restore_from_file: "从文件恢复",
+    no_storage_permission: "没有存储权限",
+    backup_success: "备份成功",
+    backup_failed: "备份到该目录失败",
+    restore_success: "恢复成功",
+    restore_failed: "恢复失败",
   },
 });
 

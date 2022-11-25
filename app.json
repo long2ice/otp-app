@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/4d68e89e-05b7-42b6-bcca-c730dcc40a80"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -44,12 +45,21 @@
           },
           "ios": {}
         }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
       ]
     ],
     "extra": {
       "eas": {
         "projectId": "4d68e89e-05b7-42b6-bcca-c730dcc40a80"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   },
   "react-native-google-mobile-ads": {

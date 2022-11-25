@@ -47,7 +47,11 @@
     "react-native-svg-view": "^0.1.6",
     "react-native-toast-message": "^2.1.5",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "expo-updates": "~0.15.6",
+    "expo-clipboard": "~4.0.1",
+    "expo-media-library": "~15.0.0",
+    "expo-document-picker": "~11.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
