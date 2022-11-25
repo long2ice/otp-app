@@ -2,13 +2,18 @@ import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../components/layout";
 import i18n from "../i18n";
-import { DefaultTheme, useNavigation } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 // @ts-ignore
 import { TOTP } from "otpauth/dist/otpauth.esm.js";
-import { addOTPs } from "../api/otp";
+import { addOTP } from "../db";
+import { OtpFields } from "../types/otp";
 
 export default function Add() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {
     control,
     handleSubmit,
@@ -31,7 +36,7 @@ export default function Add() {
     period: i18n.t("period"),
     algorithm: i18n.t("algorithm"),
   };
-  const onSubmit = async (data: Record<OtpFields, number | string>) => {
+  const onSubmit = (data: Record<OtpFields, number | string>) => {
     const totp = new TOTP({
       label: data.label as string,
       secret: data.secret as string,
@@ -40,9 +45,8 @@ export default function Add() {
       period: data.period as number,
       algorithm: data.algorithm as string,
     });
-    const uri = totp.toString();
-    await addOTPs([uri]);
-    await navigation.goBack();
+    addOTP(totp);
+    navigation.navigate("Home", { refresh: true });
   };
   return (
     <Layout>

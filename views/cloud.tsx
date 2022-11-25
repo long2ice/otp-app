@@ -1,15 +1,11 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import * as React from "react";
-import { SvgFromUri } from "react-native-svg";
+import Layout from "../components/layout";
 
 export default function Cloud() {
   return (
-    <View>
-      <SvgFromUri
-        width={100}
-        height={100}
-        uri="https://otp.long2ice.io/icon/github.svg"
-      />
-    </View>
+    <Layout>
+      <Text>Cloud</Text>
+    </Layout>
   );
 }

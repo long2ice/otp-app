@@ -25,17 +25,22 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.long2ice.otp"
+      "package": "com.long2ice.otp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics",
       [
         "expo-build-properties",
         {
           "android": {
-            "kotlinVersion": "1.7.21"
+            "kotlinVersion": "1.7.21",
+            "enableProguardInReleaseBuilds": true
           },
           "ios": {}
         }
@@ -46,5 +51,9 @@
         "projectId": "4d68e89e-05b7-42b6-bcca-c730dcc40a80"
       }
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4103172601745047~8021580423",
+    "ios_app_id": "ca-app-pub-4103172601745047~2769253740"
   }
 }

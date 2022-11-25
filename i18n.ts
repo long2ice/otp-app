@@ -17,6 +17,10 @@ const i18n = new I18n({
     algorithm: "Algorithm",
     digits: "Digits",
     period: "Period",
+    no_camera_permission: "No camera permission",
+    requesting_camera_permission: "Requesting camera permission",
+    invalid_qr_code: "Invalid QR code",
+    search: "Search here...",
   },
   zh: {
     home: "首页",
@@ -33,6 +37,10 @@ const i18n = new I18n({
     algorithm: "算法",
     digits: "位数",
     period: "周期",
+    no_camera_permission: "没有相机权限",
+    requesting_camera_permission: "请求相机权限",
+    invalid_qr_code: "无效的二维码",
+    search: "搜索...",
   },
 });
 

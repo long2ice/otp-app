@@ -1,17 +1,14 @@
 import {
-  createNavigationContainerRef,
   DefaultTheme,
   getFocusedRouteNameFromRoute,
   NavigationContainer,
-  useNavigation,
+  useNavigationContainerRef,
 } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./views/home";
 import Backup from "./views/backup";
 import Cloud from "./views/cloud";
 import i18n from "./i18n";
 import Feather from "react-native-vector-icons/Feather";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {
   ActionSheetProvider,
   useActionSheet,
@@ -21,13 +18,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Add from "./views/add";
 import { Route } from "@react-navigation/routers";
 import Toast from "react-native-toast-message";
+import { useCallback, useEffect, useRef, useState } from "react";
+import mobileAds, {
+  AdEventType,
+  AppOpenAd,
+} from "react-native-google-mobile-ads";
+import constants from "./constants";
+import * as SplashScreen from "expo-splash-screen";
+import analytics from "@react-native-firebase/analytics";
+import Scan from "./views/scan";
+import TabNavigator from "./components/tab";
+import { createTable } from "./db";
 
-const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-type RootStackParamList = {
-  Add: undefined;
-  Home: undefined;
-};
+
 export default function AppContainer() {
   return (
     <ActionSheetProvider>
@@ -36,55 +40,6 @@ export default function AppContainer() {
         <Toast />
       </>
     </ActionSheetProvider>
-  );
-}
-
-function TabNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          height: 60,
-          paddingBottom: 10,
-        },
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Backup"
-        component={Backup}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons
-              name="settings-backup-restore"
-              color={color}
-              size={size}
-            />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Cloud"
-        component={Cloud}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="upload-cloud" color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-      />
-    </Tab.Navigator>
   );
 }
 
@@ -101,9 +56,24 @@ function getHeaderTitle(route: Partial<Route<string>>) {
   }
 }
 
-const navigationRef = createNavigationContainerRef<RootStackParamList>();
-
 function App() {
+  const navigationRef = useNavigationContainerRef<RootStackParamList>();
+  const routeNameRef = useRef("");
+  const appOpenAd = AppOpenAd.createForAdRequest(constants.AD_APP_OPEN);
+  const [appIsReady, setAppIsReady] = useState(false);
+  useEffect(() => {
+    (async () => {
+      let ad = mobileAds();
+      await ad.initialize();
+      appOpenAd.load();
+      appOpenAd.addAdEventListener(AdEventType.LOADED, (listener) => {
+        appOpenAd.show();
+      });
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setAppIsReady(true);
+      createTable();
+    })();
+  }, []);
   const { showActionSheetWithOptions } = useActionSheet();
   const onPress = () => {
     const options = [i18n.t("scan"), i18n.t("manual"), i18n.t("cancel")];
@@ -123,6 +93,7 @@ function App() {
       (selectedIndex?: number) => {
         switch (selectedIndex) {
           case 0:
+            navigationRef.navigate("Scan");
             break;
           case 1:
             navigationRef.navigate("Add");
@@ -131,8 +102,34 @@ function App() {
       }
     );
   };
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={async () => {
+        routeNameRef.current = navigationRef.getCurrentRoute()?.name ?? "";
+        await onLayoutRootView();
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.getCurrentRoute()?.name;
+        if (previousRouteName !== currentRouteName) {
+          routeNameRef.current = currentRouteName ?? "";
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+      }}
+    >
       <Stack.Navigator
         screenOptions={{
           animation: "slide_from_right",
@@ -164,6 +161,15 @@ function App() {
           component={Add}
           options={{
             title: i18n.t("manual"),
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="Scan"
+          component={Scan}
+          options={{
+            title: i18n.t("scan"),
+            headerTitleAlign: "center",
           }}
         />
       </Stack.Navigator>

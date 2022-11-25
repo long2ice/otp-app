@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "792543791941",
+    "project_id": "pc-api-6484988313658469024-689",
+    "storage_bucket": "pc-api-6484988313658469024-689.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792543791941:android:81f5a9776a58b624260c2c",
+        "android_client_info": {
+          "package_name": "com.long2ice.otp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792543791941-1htkuqddaulbp8k7eal83r7h73eltu4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwmAKoSRKNZ7om_KKGOTBB0Ez5CIyZLdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792543791941-1htkuqddaulbp8k7eal83r7h73eltu4c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792543791941-815tf0herc5edq14lnamli4vqncb6m5e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.long2ice.telsearch"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792543791941:android:f885c070c8b97a8a260c2c",
+        "android_client_info": {
+          "package_name": "com.long2ice.telsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792543791941-1htkuqddaulbp8k7eal83r7h73eltu4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwmAKoSRKNZ7om_KKGOTBB0Ez5CIyZLdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792543791941-1htkuqddaulbp8k7eal83r7h73eltu4c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792543791941-815tf0herc5edq14lnamli4vqncb6m5e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.long2ice.telsearch"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-4103172601745047~7698121140"
+    }
+  ],
+  "configuration_version": "1"
+}
