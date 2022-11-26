@@ -1,5 +1,4 @@
 import {
-  DefaultTheme,
   getFocusedRouteNameFromRoute,
   NavigationContainer,
   useNavigationContainerRef,
@@ -28,7 +27,12 @@ import * as SplashScreen from "expo-splash-screen";
 import analytics from "@react-native-firebase/analytics";
 import Scan from "./views/scan";
 import TabNavigator from "./components/tab";
-import { createTable } from "./db";
+import { createTable, getOTPList } from "./db";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Pressable } from "react-native";
+import * as Sharing from "expo-sharing";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
 
 const Stack = createNativeStackNavigator();
 
@@ -102,6 +106,16 @@ function App() {
       }
     );
   };
+  const shareBackup = async () => {
+    let filename = constants.BACKUP_URI;
+    getOTPList().then(async (otps) => {
+      let data = otps.map((otp) => otp.uri);
+      await FileSystem.writeAsStringAsync(filename, JSON.stringify(data), {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
+      await Sharing.shareAsync(filename);
+    });
+  };
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
@@ -141,14 +155,24 @@ function App() {
           options={({ route }) => ({
             headerTitleAlign: "center",
             headerTitle: getHeaderTitle(route),
-            headerLeft: (props) => {
+            headerRight: ({ tintColor, canGoBack }) => {
+              const routeName = getFocusedRouteNameFromRoute(route);
+              if (routeName == "Backup") {
+                return (
+                  <Pressable onPress={shareBackup}>
+                    <MaterialIcons name="share" color={tintColor} size={24} />
+                  </Pressable>
+                );
+              }
+            },
+            headerLeft: ({ tintColor, canGoBack }) => {
               const routeName = getFocusedRouteNameFromRoute(route);
               return (
                 (routeName == "Home" || routeName == undefined) && (
                   <Feather
                     name="plus"
                     size={24}
-                    color={DefaultTheme.colors.primary}
+                    color={tintColor}
                     onPress={onPress}
                   />
                 )

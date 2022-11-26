@@ -29,6 +29,7 @@ const i18n = new I18n({
     backup_failed: "Backup failed to this folder",
     restore_success: "Restore success",
     restore_failed: "Restore failed",
+    no_media_permission: "No media permission",
   },
   zh: {
     home: "首页",
@@ -57,6 +58,7 @@ const i18n = new I18n({
     backup_failed: "备份到该目录失败",
     restore_success: "恢复成功",
     restore_failed: "恢复失败",
+    no_media_permission: "没有媒体权限",
   },
 });
 

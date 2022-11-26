@@ -1,5 +1,6 @@
 import { TestIds } from "react-native-google-mobile-ads";
 import { Platform } from "react-native";
+import * as FileSystem from "expo-file-system";
 
 const constants = {
   AD_APP_OPEN: __DEV__
@@ -18,5 +19,6 @@ const constants = {
       }),
   API_SECRET: "holjl698709X",
   API_URL: "https://otp.long2ice.io",
+  BACKUP_URI: FileSystem.documentDirectory + "tinyotp.json",
 };
 export default constants;

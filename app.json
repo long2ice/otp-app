@@ -51,7 +51,8 @@
         {
           "iCloudContainerEnvironment": "Production"
         }
-      ]
+      ],
+      "expo-image-picker"
     ],
     "extra": {
       "eas": {
