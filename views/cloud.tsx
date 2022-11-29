@@ -6,7 +6,7 @@ export default function Cloud() {
   return (
     <Layout>
       <View className="flex h-full flex-row items-center justify-center">
-        <Text className="text-xl">Current is unavailable</Text>
+        <Text className="text-xl text-neutral-400">Current is unavailable</Text>
       </View>
     </Layout>
   );

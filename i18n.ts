@@ -30,6 +30,9 @@ const i18n = new I18n({
     restore_success: "Restore success",
     restore_failed: "Restore failed",
     no_media_permission: "No media permission",
+    delete: "Delete",
+    delete_confirm: "Are you sure to delete?",
+    no_otp: "Please add one by clicking the button left top",
   },
   zh: {
     home: "首页",
@@ -59,6 +62,9 @@ const i18n = new I18n({
     restore_success: "恢复成功",
     restore_failed: "恢复失败",
     no_media_permission: "没有媒体权限",
+    delete: "删除",
+    delete_confirm: "确定要删除吗？",
+    no_otp: "点击左上角添加",
   },
 });
 

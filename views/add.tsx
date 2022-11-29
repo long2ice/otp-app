@@ -1,4 +1,12 @@
-import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../components/layout";
 import i18n from "../i18n";
@@ -86,18 +94,18 @@ export default function Add() {
           </View>
         ))}
       </View>
-      <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-        <View
-          className="rounded p-2"
-          style={{
-            backgroundColor: DefaultTheme.colors.primary,
-          }}
+      <View className="rounded bg-blue-500">
+        <TouchableNativeFeedback
+          onPress={handleSubmit(onSubmit)}
+          background={TouchableNativeFeedback.Ripple("", true)}
         >
-          <Text className="text-center text-lg text-white">
-            {i18n.t("submit")}
-          </Text>
-        </View>
-      </TouchableOpacity>
+          <View className="rounded p-2">
+            <Text className="text-center text-lg text-white">
+              {i18n.t("submit")}
+            </Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View>
     </Layout>
   );
 }

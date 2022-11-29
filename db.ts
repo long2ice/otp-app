@@ -18,7 +18,11 @@ export function addOTP(totp: TOTP) {
     tx.executeSql("insert into otp (uri) values (?)", [totp.toString()]);
   });
 }
-
+export function deleteOTP(id: number) {
+  db.transaction((tx) => {
+    tx.executeSql("delete from otp where id = ?", [id]);
+  });
+}
 export function getOTPList(value?: string) {
   return new Promise<DBOTP[]>((resolve, reject) => {
     db.transaction((tx) => {

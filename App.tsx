@@ -31,7 +31,6 @@ import { createTable, getOTPList } from "./db";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Pressable } from "react-native";
 import * as Sharing from "expo-sharing";
-import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 
 const Stack = createNativeStackNavigator();

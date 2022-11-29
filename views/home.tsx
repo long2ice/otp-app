@@ -4,11 +4,11 @@ import Layout from "../components/layout";
 import OTP from "../components/otp";
 // @ts-ignore
 import { TOTP, URI } from "otpauth/dist/otpauth.esm.js";
-import { getOTPList } from "../db";
+import { deleteOTP, getOTPList } from "../db";
 import { DBOTP } from "../types/otp";
 import { useRoute } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/core/src/types";
-import { FlatList, RefreshControl, View } from "react-native";
+import { Alert, FlatList, RefreshControl, Text, View } from "react-native";
 import i18n from "../i18n";
 import { globalStyles } from "../styles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -37,6 +37,27 @@ export default function Home() {
     }, 1000);
     return () => clearInterval(interval);
   }, [listeners]);
+  const onDelete = (id: number) => {
+    Alert.alert(
+      i18n.t("delete"),
+      i18n.t("delete_confirm"),
+      [
+        {
+          text: i18n.t("cancel"),
+          style: "cancel",
+        },
+        {
+          text: i18n.t("delete"),
+          style: "destructive",
+          onPress: () => {
+            deleteOTP(id);
+            refresh();
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
   return (
     <Layout>
       <SearchBar
@@ -54,8 +75,13 @@ export default function Home() {
         }
       />
       <FlatList
-        className="mt-4 flex flex-col"
+        className="mt-4"
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View className="mt-[50%] flex items-center justify-center">
+            <Text className="text-xl text-neutral-400">{i18n.t("no_otp")}</Text>
+          </View>
+        }
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -66,9 +92,14 @@ export default function Home() {
             }}
           />
         }
-        renderItem={({ item }) => {
-          return <OTP otp={item} key={item.id} onListen={onListen} />;
-        }}
+        renderItem={({ item }) => (
+          <OTP
+            otp={item}
+            key={item.id}
+            onListen={onListen}
+            onDelete={onDelete}
+          />
+        )}
         data={otps}
       />
     </Layout>

@@ -1,8 +1,6 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableNativeFeedback, View } from "react-native";
 import Layout from "../components/layout";
 import i18n from "../i18n";
-import { StyleSheet } from "react-native";
-import { DefaultTheme } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as FileSystem from "expo-file-system";
 import { addOTP, getOTPList } from "../db";
@@ -11,22 +9,8 @@ import Toast from "react-native-toast-message";
 // @ts-ignore
 import { TOTP, URI } from "otpauth/dist/otpauth.esm.js";
 import * as DocumentPicker from "expo-document-picker";
+import { globalStyles } from "../styles";
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    borderRadius: 4,
-    elevation: 3,
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-  },
-});
 export default function Backup() {
   const checkPermissions = async () => {
     const permissions =
@@ -94,44 +78,42 @@ export default function Backup() {
   return (
     <Layout>
       <View className="flex h-full w-full flex-col items-center justify-center">
-        <TouchableOpacity
-          style={{
-            ...styles.button,
-            backgroundColor: DefaultTheme.colors.primary,
-            width: "50%",
-          }}
-          onPress={backup}
-          className="flex flex-row space-x-4"
-        >
-          <MaterialIcons name="backup" size={24} color="white" />
-          <Text
-            style={{
-              ...styles.text,
-              color: "white",
-            }}
+        <View className="rounded bg-blue-500">
+          <TouchableNativeFeedback
+            onPress={backup}
+            background={TouchableNativeFeedback.Ripple("", true)}
           >
-            {i18n.t("backup_to_file")}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+            <View
+              className="flex flex-row items-center justify-center space-x-3 py-3 px-6"
+              style={{
+                ...globalStyles.shadow,
+              }}
+            >
+              <MaterialIcons name="backup" size={24} color="white" />
+              <Text className="text-lg font-bold text-white">
+                {i18n.t("backup_to_file")}
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+        <View
+          className="mt-4 rounded bg-white"
           style={{
-            ...styles.button,
-            backgroundColor: "white",
-            width: "50%",
+            ...globalStyles.shadow,
           }}
-          onPress={restore}
-          className="mt-4 flex flex-row space-x-4"
         >
-          <MaterialIcons name="restore" size={24} color="gray" />
-          <Text
-            style={{
-              ...styles.text,
-              color: "gray",
-            }}
+          <TouchableNativeFeedback
+            onPress={restore}
+            background={TouchableNativeFeedback.Ripple("", true)}
           >
-            {i18n.t("restore_from_file")}
-          </Text>
-        </TouchableOpacity>
+            <View className="flex flex-row items-center justify-center space-x-3 py-3 px-6">
+              <MaterialIcons name="restore" size={24} color="gray" />
+              <Text className="text-lg font-bold text-gray-500">
+                {i18n.t("restore_from_file")}
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
       </View>
     </Layout>
   );
