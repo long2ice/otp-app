@@ -8,12 +8,12 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/4d68e89e-05b7-42b6-bcca-c730dcc40a80"
+      "url": "https://u.expo.dev/4d68e89e-05b7-42b6-bcca-c730dcc40a80?runtime-version=2.718&channel-name=main&platform=android"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,7 +23,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.long2ice.otp",
@@ -40,8 +40,7 @@
         "expo-build-properties",
         {
           "android": {
-            "kotlinVersion": "1.7.21",
-            "enableProguardInReleaseBuilds": true
+            "kotlinVersion": "1.7.21"
           },
           "ios": {}
         }
